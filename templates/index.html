@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block body %}
+    
+    <div class="container my-3">
+        <h2>Add Your Pending Tasks</h2>
+        <form action="/" method="POST"> <!-- Making submit button work -->
+            <div class="form-group">
+                <label for="title" class="form-label">Pending Task</label>
+                <!-- Storing Text -->
+                <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp"
+                    placeholder="New Task">
+            </div>
+            <div class="form-group">
+                <label for="desc" class="form-label">Pending Task Description</label>
+                <!-- Storing Text -->
+                <input type="text" class="form-control" name="desc" id="desc" placeholder="Task Description">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your information with anyone else.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+    <div class="container my-3">
+        <h2>Pending Tasks</h2>
+        
+                {% if allTodo|length == 0 %} <!-- filter in Ninja are used by |(pipe) name of the filter -->
+                    
+                <div class="alert alert-dark" role="alert">
+                    No Pending Tasks found. Add your first To-Do's Task now!!
+                  </div>
+                    {% else %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <!-- Creating Columns -->
+                                <th scope="col">S. No.</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                <!-- Jinja For Loop -->
+                {% for todo in allTodo %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th> <!-- Loop Counter for S. No. -->
+                    <td>{{todo.title}}</td> <!-- Writing Variables in Jinja -->
+                    <td>{{todo.desc}}</td>
+                    <td>{{todo.date_created}}</td>
+                    <td>
+                        <a href="/update/{{todo.sno}}" type="button" class="btn btn-outline-secondary btn-sm">✎ Edit</button>
+                        <a href="/delete/{{todo.sno}}" type="button" class="btn btn-outline-success btn-sm mx-3">✔</button>
+                    </td>
+                </tr>
+            
+                {% endfor %}
+              </tbody>
+              </table>
+                {% endif %}
+            
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rTDNEpUTHQoQUJMHLrErGJyHg89uy71MyuHH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+{% endblock body %}
